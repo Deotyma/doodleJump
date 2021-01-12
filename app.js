@@ -55,6 +55,15 @@ document.addEventListener('DOMContentLoaded', () => {
                 platform.bottom -= 4;
                 let visual = platform.visual;
                 visual.style.bottom = platform.bottom + 'px';
+
+                if (platform.bottom < 10) {
+                    let firstPlatform = platforms[0].visual;
+                    firstPlatform.classList.remove('platform');
+                    platforms.shift();
+
+                    let newPlatform = new Platform(600);
+                    platforms.push(newPlatform);
+                }
             });
         };
 
@@ -129,14 +138,22 @@ document.addEventListener('DOMContentLoaded', () => {
         };
         isGoingRight = true;
         rightTimeId = setInterval(function() {
-            if (doodlerLeftSpace <= 300) {
-                doodlerLeftSpace += 5;
-                doodler.style.left = doodlerLeftSpace + 'px';
-            } else {
-                moveLeft();
-            }
-        });
+                if (doodlerLeftSpace <= 300) {
+                    doodlerLeftSpace += 5;
+                    doodler.style.left = doodlerLeftSpace + 'px';
+                } else {
+                    moveLeft();
+                }
+            },
+            30);
     };
+
+    function moveStraight() {
+        isGoingLeft = false;
+        isGoingRight = false;
+        clearInterval(rightTimeId);
+        clearInterval(leftTimeId);
+    }
 
     function control(e) {
         if (e.key === "ArrowLeft") {
