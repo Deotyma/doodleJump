@@ -106,12 +106,36 @@ document.addEventListener('DOMContentLoaded', () => {
     };
 
     function moveLeft() {
+        if (isGoingRight) {
+            clearInterval(rightTimeId);
+            isGoingRight = false;
+        };
         isGoingLeft = true
         leftTimeId = setInterval(function() {
-            doodlerLeftSpace -= 5;
-            doodler.style.left = doodlerLeftSpace + 'px';
+            if (doodlerLeftSpace >= 0) {
+                doodlerLeftSpace -= 5;
+                doodler.style.left = doodlerLeftSpace + 'px';
+            } else {
+                moveRight();
+            };
         }, 30);
 
+    };
+
+    function moveRight() {
+        if (isGoingLeft) {
+            clearInterval(leftTimeId);
+            isGoingLeft = false;
+        };
+        isGoingRight = true;
+        rightTimeId = setInterval(function() {
+            if (doodlerLeftSpace <= 300) {
+                doodlerLeftSpace += 5;
+                doodler.style.left = doodlerLeftSpace + 'px';
+            } else {
+                moveLeft();
+            }
+        });
     };
 
     function control(e) {
@@ -119,7 +143,7 @@ document.addEventListener('DOMContentLoaded', () => {
             console.log('left');
             moveLeft();
         } else if (e.key === "ArrowRight") {
-
+            moveRight();
         } else if (e.key === "ArrowUp") {
             moveStraight()
         }
