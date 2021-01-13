@@ -14,6 +14,8 @@ document.addEventListener('DOMContentLoaded', () => {
     let isGoingRight = false;
     let leftTimeId;
     let rightTimeId;
+    let score = 0
+    const buttonElt = document.querySelector('.button');
 
     function createDoodler() {
         grid.appendChild(doodler);
@@ -43,7 +45,6 @@ document.addEventListener('DOMContentLoaded', () => {
             let newPlatBottom = 100 + i * platGap;
             let newPlatform = new Platform(newPlatBottom);
             platforms.push(newPlatform);
-            console.log(platforms);
 
         };
 
@@ -60,6 +61,7 @@ document.addEventListener('DOMContentLoaded', () => {
                     let firstPlatform = platforms[0].visual;
                     firstPlatform.classList.remove('platform');
                     platforms.shift();
+                    score++;
 
                     let newPlatform = new Platform(600);
                     platforms.push(newPlatform);
@@ -108,10 +110,17 @@ document.addEventListener('DOMContentLoaded', () => {
     };
 
     function gameOver() {
-        console.log('game over');
+        buttonElt.addEventListener('click', start);
         isGameOver = true;
+        while (grid.firstChild) {
+            grid.removeChild(grid.firstChild);
+        };
+        grid.innerHTML = score;
         clearInterval(upTimerId);
         clearInterval(downTimerId);
+        clearInterval(leftTimeId);
+        clearInterval(rightTimeId);
+        console.log('game over');
     };
 
     function moveLeft() {
@@ -169,15 +178,19 @@ document.addEventListener('DOMContentLoaded', () => {
 
 
     function start() {
-        if (!isGameOver) {
+        if (isGameOver) {
             createPlatforms();
             createDoodler();
             setInterval(movePlatforms, 30);
             jump();
             document.addEventListener('keyup', control);
+            console.log('start');
 
-        };
+        }
     };
 
-    start();
+    /* start(); */
+    if (!isGameOver) {
+        buttonElt.addEventListener('click', start);
+    }
 });

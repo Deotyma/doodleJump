@@ -8,6 +8,8 @@
     height: 600px;
     background: linear-gradient(45deg, rgba(34, 195, 192, 1) 0%, rgba(45, 208, 253, 1) 100%);
     position: relative;
+    font-size: 200px;
+    text-align: center;
 }
 
 .doodler {
@@ -31,4 +33,20 @@
     background-position: center;
     background-size: cover;
     position: absolute;
+}
+
+.button {
+    width: 400px;
+    background-color: pink;
+    font-size: large;
+    padding-top: 8px;
+    padding-bottom: 8px;
+    border-style: none;
+    margin-top: 8px;
+    text-align: center;
+    cursor: pointer;
+}
+
+.button:hover {
+    background-color: plum;
 }
